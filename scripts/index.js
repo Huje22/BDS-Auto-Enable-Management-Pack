@@ -13,7 +13,7 @@ world.afterEvents.entityDie.subscribe(
       if(damagingEntity instanceof Player ){
         damageRR = damagingEntity.name;
       }
-    } else {ł
+    } else {
       damageRR = cause;
     }
     console.log("PlayerDeath:" + name +" Casue:" + damageRR );
