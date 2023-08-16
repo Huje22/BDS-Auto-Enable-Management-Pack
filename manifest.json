@@ -1,0 +1,28 @@
+{
+    "format_version": 2,
+
+    "header": {
+        "description": "§7[§aBDS§1 Auto Enable §a]§r - Paczka do komunikacij pomiędzy §aBDS§1 Auto Enable §r a serverem minecraft",
+        "name": "§7[§aBDS§1 Auto Enable §a]§r",
+        "uuid": "57602753-b979-42e0-9a53-10298ec98c47",
+        "version": [0, 0, 1],
+        "min_engine_version": [ 1, 19, 80 ]
+    },
+
+    "modules": [
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "81d144dc-c340-4c4c-90a7-379321811e48",
+            "version": [0, 0, 1],
+            "entry": "scripts/index.js"
+        }
+    ],
+
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.4.0-beta"
+        }       
+    ]
+}
