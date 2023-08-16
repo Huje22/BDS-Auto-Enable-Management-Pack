@@ -3,24 +3,24 @@ import { world, system, EntityDamageCause, Player } from "@minecraft/server";
 export const mcprefix = "§7[§aBDS§1 Auto Enable §a]§r ";
 export const consoleprefix = "[BDS Auto Enable] ";
 
+world.afterEvents.entityDie.subscribe(
+  ({ deadEntity: player, damageSource: { cause , damagingEntity} }) => {
+    const name = player.name;
+    let damageRR;
 
-//world.afterEvents.entityDie.subscribe(
-//  ({ deadEntity: player, damageSource: { cause , damagingEntity} }) => {
-//    const name = player.name;
-//    let message;
-//
-//    if(cause == EntityDamageCause.entityAttack){
-//      message = "umarł przez " +  damagingEntity?.typeId;
-//      if(damagingEntity instanceof Player ){
-//        message = "umarł przez " +  damagingEntity.name;
-//      }
-//    } else {
-//      message = "umarł przez " +  cause;
-//    }
-//
-//  },
-//  { entityTypes: [ "minecraft:player" ] },
-//);
+    if(cause == EntityDamageCause.entityAttack){
+      damageRR = damagingEntity?.typeId;
+      if(damagingEntity instanceof Player ){
+        damageRR = damagingEntity.name;
+      }
+    } else {ł
+      damageRR = cause;
+    }
+    console.log("PlayerDeath:" + name +" Casue:" + damageRR );
+
+  },
+  { entityTypes: [ "minecraft:player" ] },
+);
 
 const cooldowns = new Map();
 world.beforeEvents.chatSend.subscribe((data) => {
@@ -31,10 +31,11 @@ world.beforeEvents.chatSend.subscribe((data) => {
       cooldowns.set(data.sender.name, Date.now());
       const name = data.sender.name;
       const message = data.message;
-      console.log("[Chat] PlayerChat:"+ name + " Message:" + message);
+      console.log("PlayerChat:"+ name + " Message:" + message);
     }
   },
 );
+
 
 world.sendMessage(mcprefix +  '§3Wczytano!');
 console.log(consoleprefix + 'Wczytano!');
