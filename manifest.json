@@ -4,7 +4,7 @@
     "header": {
         "description": "§7[§aBDS§1 Auto Enable §a]§r - Paczka do komunikacij pomiędzy §aBDS§1 Auto Enable §r a serverem minecraft",
         "name": "§7[§aBDS§1 Auto Enable §a]§r",
-        "uuid": "57602753-b979-42e0-9a53-10298ec98c47",
+        "uuid": "57602753-b979-42e0-9a53-10298ec98c41",
         "version": [0, 0, 1],
         "min_engine_version": [ 1, 19, 80 ]
     },
