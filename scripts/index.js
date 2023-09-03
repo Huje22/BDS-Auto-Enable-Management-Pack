@@ -3,6 +3,13 @@ import { world, system, EntityDamageCause, Player } from "@minecraft/server";
 export const mcprefix = "§7[§aBDS§1 Auto Enable §a]§r ";
 export const consoleprefix = "[BDS Auto Enable] ";
 
+world.afterEvents.playerSpawn.subscribe(
+  ({ player, initialSpawn }) => {
+      if (!initialSpawn) return;
+      console.log("PlayerJoin:" + player.name);
+  },
+);
+
 world.afterEvents.entityDie.subscribe(
   ({ deadEntity: player, damageSource: { cause , damagingEntity} }) => {
     const name = player.name;
