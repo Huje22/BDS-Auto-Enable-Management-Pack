@@ -35,17 +35,10 @@ world.afterEvents.entityDie.subscribe(
 //
 
 
-const cooldowns = new Map();
 world.beforeEvents.chatSend.subscribe((data) => {
-    if (cooldowns.has(data.sender.name) && (Date.now() - cooldowns.get(data.sender.name)) / 1000 < 2) {
-      data.sender.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
-      data.cancel = true;
-    } else {
-      cooldowns.set(data.sender.name, Date.now());
-      const name = data.sender.name;
+    const name = data.sender.name;
       const message = data.message;
       console.log("PlayerChat:"+ name + " Message:" + message);
-    }
   },
 );
 
