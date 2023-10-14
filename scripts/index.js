@@ -1,4 +1,5 @@
 import { world, system, EntityDamageCause, Player } from "@minecraft/server";
+import "./tps.js";
 
 export const mcprefix = "§7[§aBDS§1 Auto Enable §a]§r ";
 export const consoleprefix = "[BDS Auto Enable] ";
