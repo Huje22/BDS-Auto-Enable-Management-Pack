@@ -26,4 +26,7 @@ export function getTps(){
 }
 
    
-system.runInterval(()=>{getTps()} , 6000)
+system.runInterval(()=>{getTps()} , 3000);
+system.runInterval(()=>{getTps()} , 2999);
+system.runInterval(()=>{getTps()} , 2998);
+
