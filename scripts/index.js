@@ -33,9 +33,6 @@ world.afterEvents.entityDie.subscribe(
 //TODO: Dodać wsparcja dla 
 // PlayerBreakBlockBeforeEvent (https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/playerbreakblockbeforeevent)
 // PlayerPlaceBlockBeforeEvent (https://learn.microsoft.com/en-us/minecraft/creator/scriptapi/minecraft/server/playerplaceblockbeforeevent)
-//
-//
-
 
 const cooldowns = new Map();
 world.beforeEvents.chatSend.subscribe((data) => {
