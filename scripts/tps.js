@@ -20,9 +20,9 @@ function getCurrentTPS() {
 export function getTps(){
     getCurrentTPS().then((tps) => {
         let tpsMess = mcprefix + `TPS: `;
-        if (tps >= 15) {
+        if (tps >= 17) {
             tpsMess += `§2${parseInt(tps)}/20`; 
-        } else if (tps >= 15) {
+        } else if (tps >= 10) {
             tpsMess += `§e${parseInt(tps)}/20`; 
         } else {
             tpsMess += `§c${parseInt(tps)}/20`; 
