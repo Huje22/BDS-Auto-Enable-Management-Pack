@@ -52,12 +52,12 @@ world.beforeEvents.chatSend.subscribe((data) => {
       }
 
       if(message.startsWith("!")){
-        console.log("PlayerCommand:" + name + " Command:" + message);
+        console.log("PlayerCommand:" + name + " Command:" + message + " Op: " + player.isOp());
         data.cancel = true; 
         return;
       }
 
-      console.log("PlayerChat:"+ name + " Message:" + message);
+      console.log("PlayerChat:"+ name + " Message:" + message + " Op: " + player.isOp());
     }
   },
 );
