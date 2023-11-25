@@ -36,7 +36,8 @@ world.afterEvents.entityDie.subscribe(
 
 const cooldowns = new Map();
 world.beforeEvents.chatSend.subscribe((data) => {
-     const name = data.sender.name;
+      const player = data.sender;
+      const name = player.name;
       const message = data.message;
 
     if (cooldowns.has(name) && (Date.now() - cooldowns.get(name)) / 1000 < 2) {
