@@ -43,7 +43,9 @@ world.beforeEvents.chatSend.subscribe((data) => {
       data.sender.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
       data.cancel = true;
     } else {
+      if(!player.isOp()){
       cooldowns.set(name, Date.now());
+      }
  
       if(message.startsWith("!tps")){
         getTps();
@@ -57,7 +59,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
         return;
       }
 
-      console.log("PlayerChat:"+ name + " Message:" + message + " Op: " + player.isOp());
+      console.log("PlayerChat:"+ name + " Message:" + message);
     }
   },
 );
