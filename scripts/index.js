@@ -55,7 +55,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
       }
 
       if(message.startsWith("!")){
-        console.log("PlayerCommand:" + name + " Command:" + message + " Op: " + player.isOp());
+        console.log("PlayerCommand:" + name + " Command:" + message + " Op:" + player.isOp());
         data.cancel = true; 
         return;
       }
