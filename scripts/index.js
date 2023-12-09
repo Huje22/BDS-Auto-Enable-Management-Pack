@@ -2,6 +2,7 @@ import { world, system, EntityDamageCause, Player } from "@minecraft/server";
 import "./tps.js";
 import { getTps } from "./tps.js";
 
+const appHandledMessages = false;
 export const mcprefix = "§7[§aBDS§1 Auto Enable §a]§r ";
 export const consoleprefix = "[BDS Auto Enable] ";
 
@@ -61,6 +62,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
       }
 
       console.log("PlayerChat:"+ name + " Message:" + message);
+      data.cancel = appHandledMessages; 
     }
   },
 );
