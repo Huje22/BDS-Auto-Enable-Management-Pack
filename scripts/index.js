@@ -8,8 +8,8 @@ export const consoleprefix = "[BDS Auto Enable] ";
 
 world.afterEvents.playerSpawn.subscribe(
   ({ player, initialSpawn }) => {
-    if (!initialSpawn) return;
-    console.log("PlayerJoin:" + player.name);
+    if (initialSpawn) console.log("PlayerJoin:" + player.name);
+    console.log("PlayerSpawn:" + player.name);
   },
 );
 
