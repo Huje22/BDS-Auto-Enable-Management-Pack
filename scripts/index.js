@@ -33,7 +33,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       getTps();;
     }
 
-
 });
 
 /**
