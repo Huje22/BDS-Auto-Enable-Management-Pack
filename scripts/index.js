@@ -15,29 +15,89 @@ world.afterEvents.playerSpawn.subscribe(
 
 //TODO: Dodać obsługę eventu w BDS auto enable 
 
-world.afterEvents.playerChangeDimension.subscribe(({ player, fromDimension, fromLocation, toDimension, toLocation }) => {
+world.afterEvents.playerDimensionChange.subscribe(({ player, fromDimension, fromLocation, toDimension, toLocation }) => {
   console.log("Gracz zmienił wymiar: " + player.name);
-  console.log("Z wymiaru: " + fromDimension.name);
-  console.log("Na wymiar: " + toDimension.name);
+  console.log("Z wymiaru: " + fromDimension.id);
+  console.log("Na wymiar: " + toDimension.id);
   console.log("Lokacja przed zmianą wymiaru: ", fromLocation);
   console.log("Lokacja po zmianie wymiaru: ", toLocation);
 });
 
+
+/**
+ * Używam §lCOS§l§r aby w BDS-Auto-Enable podmienic §l na ** i wiadomość na discord byłą wybrubiona
+ */
+
 world.afterEvents.entityDie.subscribe(
-  ({ deadEntity: player, damageSource: { cause, damagingEntity } }) => {
+  ({ deadEntity: player, damageSource: { cause, damagingEntity, damagingProjectile } }) => {
     const name = player.name;
-    let damageRR;
+    let deathMessage;
 
-    if (cause == EntityDamageCause.entityAttack) {
-      damageRR = damagingEntity?.typeId;
-      if (damagingEntity instanceof Player) {
-        damageRR = damagingEntity.name;
-      }
-    } else {
-      damageRR = cause;
+    switch (cause) {
+      case EntityDamageCause.entityAttack:
+        if (damagingEntity instanceof Player) {
+          deathMessage = "zabity przez §l" + damagingEntity.name + "§l";
+        } else {
+          deathMessage = "zabity przez §l" + damagingEntity?.typeId + "§l";
+        }
+        break;
+
+      case EntityDamageCause.entityExplosion:
+      case EntityDamageCause.blockExplosio:
+        deathMessage = "wysadzony w powietrze przez §l" + damagingEntity?.typeId + "§l";
+        break;
+
+      case EntityDamageCause.projectile:
+        deathMessage = "zastrzelony przez §l" + damagingEntity?.typeId + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
+        break;
+
+      case EntityDamageCause.fall:
+        deathMessage = "§lspadł z wysokości§l";
+        break;
+
+      case EntityDamageCause.drowning:
+        deathMessage = "§lutonoł§l"
+        break;
+
+      case EntityDamageCause.fireTick:
+        deathMessage = "§lstanoł w płomieniach§l"
+        break;
+
+      case EntityDamageCause.suffocation:
+        deathMessage = "§lzadusił się w ścianie§l"
+        break;
+
+      case EntityDamageCause.flyIntoWall:
+        deathMessage = "§lwleciał w ściane§l"
+        break;
+
+      case EntityDamageCause.anvil:
+        deathMessage = "został zgnieciony przez spadające §lkowadło§l"
+        break;
+
+      case EntityDamageCause.freezing:
+        deathMessage = "§lzamarzł§l"
+        break;
+
+      case EntityDamageCause.fireworks:
+        deathMessage = "§leksplodował z hukiem§l"
+        break;
+
+      case EntityDamageCause.stalactite:
+        deathMessage = "został przebity przez spadający §lstalaktyt§l"
+        break;
+
+      case EntityDamageCause.suicide:
+        deathMessage = "popełnił §lsamobójstwo§l"
+        break;
+
+      default:
+        deathMessage = "zabity przez §l" + cause + "§l";
+        break;
+
     }
-    console.log("PlayerDeath:" + name + " Casue:" + damageRR);
 
+    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage);
   },
   { entityTypes: ["minecraft:player"] },
 );
