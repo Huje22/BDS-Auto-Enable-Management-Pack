@@ -22,7 +22,19 @@ world.afterEvents.playerDimensionChange.subscribe(({ player, fromDimension, from
   console.log("DimensionChangePlayer: " + player.name + " From:" + fromDimension.id + " To:" + toDimension.id)
 });
 
+system.afterEvents.scriptEventReceive.subscribe((event) => {
+    // console.log(
+    //   "id:", event.id,
+    //   "message:", event.message,
+    //   "sourceType:", event.sourceType
+    // );
+    
+    if(event.id == "bds:tps"){
+      getTps();;
+    }
 
+
+});
 
 /**
  * Używam §lCOS§l§r aby w BDS-Auto-Enable podmienic §l na ** i wiadomość na discord byłą wybrubiona
@@ -112,12 +124,6 @@ world.beforeEvents.chatSend.subscribe((data) => {
     data.sender.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
     data.cancel = true;
   } else {
-    if (message.startsWith("!tps")) {
-      getTps();
-      data.cancel = true;
-      return;
-    }
-
     if (message.startsWith("!")) {
       console.log("PlayerCommand:" + name + " Command:" + message + " Op:" + player.isOp());
       data.cancel = true;
