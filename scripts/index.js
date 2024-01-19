@@ -13,15 +13,15 @@ world.afterEvents.playerSpawn.subscribe(
   },
 );
 
-//TODO: Dodać obsługę eventu w BDS auto enable 
-
 world.afterEvents.playerDimensionChange.subscribe(({ player, fromDimension, fromLocation, toDimension, toLocation }) => {
-  console.log("Gracz zmienił wymiar: " + player.name);
-  console.log("Z wymiaru: " + fromDimension.id);
-  console.log("Na wymiar: " + toDimension.id);
-  console.log("Lokacja przed zmianą wymiaru: ", fromLocation);
-  console.log("Lokacja po zmianie wymiaru: ", toLocation);
+  // console.log("Z wymiaru: " + fromDimension.id);
+  // console.log("Na wymiar: " + toDimension.id);
+  // console.log("Lokacja przed zmianą wymiaru: " + fromLocation.x + " " + fromLocation.y + " " + fromLocation.z);
+  // console.log("Lokacja po zmianie wymiaru: " + toLocation.x + " " + toLocation.y + " " + toLocation.z);
+
+  console.log("DimensionChangePlayer: " + player.name + " From:" + fromDimension.id + " To:" + toDimension.id)
 });
+
 
 
 /**
@@ -94,7 +94,6 @@ world.afterEvents.entityDie.subscribe(
       default:
         deathMessage = "zabity przez §l" + cause + "§l";
         break;
-
     }
 
     console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage);
