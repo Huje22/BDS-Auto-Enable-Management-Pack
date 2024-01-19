@@ -13,6 +13,16 @@ world.afterEvents.playerSpawn.subscribe(
   },
 );
 
+//TODO: Dodać obsługę eventu w BDS auto enable 
+
+world.afterEvents.playerChangeDimension.subscribe(({ player, fromDimension, fromLocation, toDimension, toLocation }) => {
+  console.log("Gracz zmienił wymiar: " + player.name);
+  console.log("Z wymiaru: " + fromDimension.name);
+  console.log("Na wymiar: " + toDimension.name);
+  console.log("Lokacja przed zmianą wymiaru: ", fromLocation);
+  console.log("Lokacja po zmianie wymiaru: ", toLocation);
+});
+
 world.afterEvents.entityDie.subscribe(
   ({ deadEntity: player, damageSource: { cause, damagingEntity } }) => {
     const name = player.name;
