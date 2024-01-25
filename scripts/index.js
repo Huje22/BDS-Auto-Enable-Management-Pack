@@ -59,7 +59,13 @@ world.afterEvents.entityDie.subscribe(
         break;
 
       case EntityDamageCause.projectile:
-        deathMessage = "zastrzelony przez §l" + damagingEntity?.typeId + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
+     if (damagingEntity instanceof Player) {
+  deathMessage = "zastrzelony przez §l" + damagingEntity.name + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
+     } else{
+  deathMessage = "zastrzelony przez §l" + damagingEntity?.typeId + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
+     }
+
+
         break;
 
       case EntityDamageCause.fall:
