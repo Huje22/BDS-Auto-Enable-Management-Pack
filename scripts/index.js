@@ -22,16 +22,44 @@ world.afterEvents.playerDimensionChange.subscribe(({ player, fromDimension, from
   console.log("DimensionChangePlayer: " + player.name + " From:" + fromDimension.id + " To:" + toDimension.id)
 });
 
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+  const name = event.player.name;
+  const block = event.block;
+
+  const x = block.location.x.toFixed(2);
+  const y = block.location.y.toFixed(2);
+  const z = block.location.z.toFixed(2);
+
+  const position = "X: " + x + " Y:" + y + " Z:" + z;
+
+
+  console.log("PlayerBreakBlock:" + name + " Block:" + block.typeId + " Position:" + position);
+});
+
+world.afterEvents.playerPlaceBlock.subscribe((event) => {
+  const name = event.player.name;
+  const block = event.block;
+
+  const x = block.location.x.toFixed(2);
+  const y = block.location.y.toFixed(2);
+  const z = block.location.z.toFixed(2);
+
+  const position = "X: " + x + " Y:" + y + " Z:" + z;
+
+
+  console.log("PlayerPlaceBlock:" + name + " Block:" + block.typeId + " Position:" + position);
+});
+
 system.afterEvents.scriptEventReceive.subscribe((event) => {
-    // console.log(
-    //   "id:", event.id,
-    //   "message:", event.message,
-    //   "sourceType:", event.sourceType
-    // );
-    
-    if(event.id == "bds:tps"){
-      getTps();;
-    }
+  // console.log(
+  //   "id:", event.id,
+  //   "message:", event.message,
+  //   "sourceType:", event.sourceType
+  // );
+
+  if (event.id == "bds:tps") {
+    getTps();;
+  }
 
 });
 
@@ -59,11 +87,11 @@ world.afterEvents.entityDie.subscribe(
         break;
 
       case EntityDamageCause.projectile:
-     if (damagingEntity instanceof Player) {
-  deathMessage = "zastrzelony przez §l" + damagingEntity.name + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
-     } else{
-  deathMessage = "zastrzelony przez §l" + damagingEntity?.typeId + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
-     }
+        if (damagingEntity instanceof Player) {
+          deathMessage = "zastrzelony przez §l" + damagingEntity.name + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
+        } else {
+          deathMessage = "zastrzelony przez §l" + damagingEntity?.typeId + "§l§r przy użyciu §l" + damagingProjectile?.typeId + "§l";
+        }
 
 
         break;
