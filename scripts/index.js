@@ -1,5 +1,6 @@
 import { world, system, EntityDamageCause, Player } from "@minecraft/server";
 import "./tps.js";
+import "./event/death.js";
 import { getTps } from "./tps.js";
 
 const appHandledMessages = false;
