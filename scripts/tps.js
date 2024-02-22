@@ -19,6 +19,7 @@ function getCurrentTPS() {
     
 export function getTps(){
     getCurrentTPS().then((tps) => {
+        //TODO: Usunąć 'parseInt' i dodać wartość w double 
         let tpsMess = mcprefix + `TPS: `;
         if (tps >= 17) {
             tpsMess += `§2${parseInt(tps)}/20`; 
