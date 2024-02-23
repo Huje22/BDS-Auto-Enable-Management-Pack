@@ -1,4 +1,4 @@
-import { world, system, EntityDamageCause, Player } from "@minecraft/server";
+import { world } from "@minecraft/server";
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const name = event.player.name;

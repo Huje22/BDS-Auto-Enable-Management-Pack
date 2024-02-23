@@ -1,23 +1,20 @@
 {
-  "name": "huje22-server-bechavior-pack",
-  "version": "1.0.0",
-  "description": "<div align=\"center\">",
+  "name": "bds-auto-enable-managment-pack",
+  "version": "0.0.1",
+  "description": "Paczka do komunikacij pomiędzy BDS Auto Enable a serverem minecraft",
   "main": "index.js",
+  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Huje22/Huje22-server-behavior-pack.git"
+    "url": "git+https://github.com/Huje22/BDS-Auto-Enable-Management-Pack.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "IndianBartonka",
+  "license": "GPL-3.0-or-later",
   "bugs": {
-    "url": "https://github.com/Huje22/Huje22-server-behavior-pack/issues"
+    "url": "https://github.com/Huje22/BDS-Auto-Enable-Management-Pack/issues"
   },
-  "homepage": "https://github.com/Huje22/Huje22-server-behavior-pack#readme",
-  "dependencies": {
-    "@minecraft/server": "^1.7.0",
-    "@minecraft/server-net": "^1.0.0-beta.11940b24"
-  }
+  "homepage": "https://github.com/Huje22/BDS-Auto-Enable-Management-Pack#readme"
 }

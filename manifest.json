@@ -1,28 +1,37 @@
 {
-    "format_version": 2,
-
-    "header": {
-        "description": "[BDS Auto Enable ] - Paczka do komunikacij pomiędzy §aBDS§1 Auto Enable §r a serverem minecraft",
-        "name": "[BDS Auto Enable ]",
-        "uuid": "57602753-b979-42e0-9a53-10298ec98c41",
-        "version": [0, 0, 1],
-        "min_engine_version": [ 1, 19, 80 ]
-    },
-
-    "modules": [
-        {
-            "type": "script",
-            "language": "javascript",
-            "uuid": "81d144dc-c340-4c4c-90a7-379321811e48",
-            "version": [0, 0, 1],
-            "entry": "scripts/index.js"
-        }
+  "format_version": 2,
+  "header": {
+    "description": "Paczka do komunikacij pomiędzy §aBDS§1 Auto Enable §r a serverem minecraft",
+    "name": "BDS Auto Enable Managment Pack",
+    "uuid": "57602753-b979-42e0-9a53-10298ec98c41",
+    "version": [
+      0,
+      0,
+      1
     ],
-
-    "dependencies": [
-        {
-            "module_name": "@minecraft/server",
-            "version": "1.9.0-beta"
-        }       
+    "min_engine_version": [
+      1,
+      20,
+      62
     ]
+  },
+  "modules": [
+    {
+      "type": "script",
+      "language": "javascript",
+      "uuid": "81d144dc-c340-4c4c-90a7-379321811e48",
+      "version": [
+        0,
+        0,
+        1
+      ],
+      "entry": "scripts/index.js"
+    }
+  ],
+  "dependencies": [
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.9.0-beta"
+    }
+  ]
 }

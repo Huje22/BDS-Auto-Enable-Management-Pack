@@ -1,7 +1,6 @@
-import { world, system, EntityDamageCause, Player } from "@minecraft/server";
-import "./tps.js";
-import "./event/death.js";
-import "./event/player.js";
+import { world, system } from "@minecraft/server";
+import "./death.js";
+import "./player.js";
 import { getTps } from "./tps.js";
 
 const appHandledMessages = false;
@@ -18,7 +17,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
   if (event.id == "bds:tps") {
     getTps();;
   }
-
 });
 
 const cooldowns = new Map();
@@ -26,9 +24,9 @@ world.beforeEvents.chatSend.subscribe((data) => {
   const player = data.sender;
   const name = player.name;
   const message = data.message;
-
+  
   if (cooldowns.has(name) && (Date.now() - cooldowns.get(name)) / 1000 < 2) {
-    data.sender.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
+    player.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
     data.cancel = true;
   } else {
     if (message.startsWith("!")) {
@@ -49,3 +47,4 @@ world.beforeEvents.chatSend.subscribe((data) => {
 
 world.sendMessage(mcprefix + '§3Wczytano!');
 console.log(consoleprefix + 'Wczytano!');
+system.runTimeout(() => getTps(), 40);
