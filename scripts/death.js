@@ -7,6 +7,7 @@ world.afterEvents.entityDie.subscribe(
     let deathMessage;
 
     switch (cause) {
+        //TODO: Dodać "Killer"
       case EntityDamageCause.entityAttack:
         if (damagingEntity instanceof Player) {
           const itemName = damagingEntity.getComponent("inventory").container.getSlot(damagingEntity.selectedSlot).getItem().nameTag;
