@@ -3,11 +3,11 @@ import { world, EntityDamageCause, Player } from "@minecraft/server";
 world.afterEvents.entityDie.subscribe(
   ({ deadEntity: player, damageSource: { cause, damagingEntity, damagingProjectile } }) => {
     const name = player.name;
-    let usedName = "none";
+    let killer = "none";
     let deathMessage;
+    let usedName = "none";
 
     switch (cause) {
-        //TODO: Dodać "Killer"
       case EntityDamageCause.entityAttack:
         if (damagingEntity instanceof Player) {
           const itemName = damagingEntity.getComponent("inventory").container.getSlot(damagingEntity.selectedSlot).getItem().nameTag;
@@ -16,15 +16,24 @@ world.afterEvents.entityDie.subscribe(
             usedName = itemName;
           }
 
-          deathMessage = "zabity przez " + damagingEntity.name + ""
+          deathMessage = "zabity przez gracza " + damagingEntity.name;
+          killer = damagingEntity.name
         } else {
-          deathMessage = "zabity przez " + damagingEntity?.typeId + "";
+          const killerNameTag = damagingEntity.nameTag;
+          if (killerNameTag !== undefined && killerNameTag !== "") {
+            deathMessage = "zabity przez " + killerNameTag;
+            killer = killerNameTag;
+          } else {
+            deathMessage = "zabity przez " + damagingEntity?.typeId;
+            killer = damagingEntity?.typeId;
+          }
         }
         break;
 
       case EntityDamageCause.entityExplosion:
       case EntityDamageCause.blockExplosion:
-        deathMessage = "wysadzony w powietrze przez " + damagingEntity?.typeId + "";
+        deathMessage = "wysadzony w powietrze przez " + damagingEntity?.typeId;
+        killer = damagingEntity?.typeId;
         break;
 
       case EntityDamageCause.projectile:
@@ -34,12 +43,18 @@ world.afterEvents.entityDie.subscribe(
           if (itemName !== undefined) {
             usedName = itemName;
           }
-
-          deathMessage = "zastrzelony przez " + damagingEntity.name + " przy użyciu " + damagingProjectile?.typeId + "";
+          deathMessage = "zastrzelony przez gracza " + damagingEntity.name + " przy użyciu " + damagingProjectile?.typeId;
+          killer = damagingEntity?.name;
         } else {
-          deathMessage = "zastrzelony przez " + damagingEntity?.typeId + " przy użyciu " + damagingProjectile?.typeId + "";
+          const killerNameTag = damagingEntity.nameTag;
+          if (killerNameTag !== undefined && killerNameTag !== "") {
+            deathMessage = "zastrzelony przez " + killerNameTag + " przy użyciu " + damagingProjectile?.typeId;
+            killer = killerNameTag;
+          } else {
+            deathMessage = "zabity przez " + damagingEntity?.typeId;
+            killer = damagingEntity?.typeId;
+          }
         }
-
         break;
 
       case EntityDamageCause.fall:
@@ -87,11 +102,11 @@ world.afterEvents.entityDie.subscribe(
         break;
 
       default:
-        deathMessage = "zabity przez " + cause + "";
+        deathMessage = "zabity przez " + cause;
         break;
     }
-
-    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " UsedName:" + usedName);
+    
+    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " Killer:" + killer + " UsedName:" + usedName);
   },
   { entityTypes: ["minecraft:player"] },
 );
