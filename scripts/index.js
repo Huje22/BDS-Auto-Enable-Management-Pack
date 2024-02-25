@@ -1,6 +1,7 @@
 import { world, system } from "@minecraft/server";
 import "./death.js";
 import "./player.js";
+// import "./borded.js"
 import { getTps } from "./tps.js";
 
 const appHandledMessages = false;
