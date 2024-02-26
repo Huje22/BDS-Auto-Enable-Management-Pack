@@ -15,8 +15,27 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
   //   "sourceType:", event.sourceType
   // );
 
-  if (event.id == "bds:tps") {
-    getTps();;
+
+  switch (event.id) {
+    case "bds:tag_prefix":
+      console.log(event.message);
+
+      const args = event.message.split(' ');
+      const playerName = args[0];
+      const restOfMessage = args.slice(1).join(' ');
+
+      const [player] = world.getPlayers({
+        name: playerName
+      })
+
+      if (player !== undefined && restOfMessage !== "") {
+        player.nameTag = restOfMessage + player.name
+      }
+      break;
+
+    case "bds:tps":
+      getTps();;
+      break;
   }
 });
 
@@ -25,7 +44,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
   const player = data.sender;
   const name = player.name;
   const message = data.message;
-  
+
   if (cooldowns.has(name) && (Date.now() - cooldowns.get(name)) / 1000 < 2) {
     player.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
     data.cancel = true;
