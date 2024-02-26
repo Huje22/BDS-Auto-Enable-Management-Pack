@@ -5,7 +5,7 @@ import "./player.js";
 import { getTps } from "./tps.js";
 
 const appHandledMessages = false;
-export const mcprefix = "§7[§aBDS§1 Auto Enable §a]§r ";
+export const mcprefix = "§7[§aBDS§1 Auto Enable§a]§r ";
 export const consoleprefix = "[BDS Auto Enable] ";
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
