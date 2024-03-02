@@ -57,24 +57,30 @@ function checkAllPlayers() {
                 }
 
 
-                world.sendMessage("z " + teleportZ);
-                world.sendMessage("x " + teleportX);
-                world.sendMessage("distance " + distanceToSafe)
+                // world.sendMessage("z " + teleportZ);
+                // world.sendMessage("x " + teleportX);
 
-                player.teleport({
-                    x: parseFloat(teleportX),
-                    y: player.location.y,
-                    z: parseFloat(teleportZ)
-                },
-                //Mojang to debile i tego nie da się użyć
-                    { checkForBlocks: true }
-                );
-                
+                teleport(teleportX, teleportZ, player);
+
                 player.addTag("border_outside");
             }
         } else {
             player.removeTag("border_outside");
         }
+    }
+}
+
+function teleport(teleportX, teleportZ, player) {
+    const targetBlockLocation = { x: parseFloat(teleportX), y: player.location.y, z: parseFloat(teleportZ) };
+    const targetBlock = player.dimension.getBlock(targetBlockLocation);
+    if (!targetBlock)  return;
+    
+
+    if (targetBlock.isAir) {
+        player.teleport(targetBlockLocation);
+    } else{
+        player.applyDamage(0.5);
+        
     }
 }
 
