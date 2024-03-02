@@ -102,7 +102,7 @@ world.afterEvents.entityDie.subscribe(
 
         if (!player.hasTag("border_reah")) {
           if (player.hasTag("border_outside")) {
-            deathMessage = "zabity przez";
+            deathMessage = "zabity przez border";
             killer = "border";
           }
         }
