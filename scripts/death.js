@@ -99,13 +99,20 @@ world.afterEvents.entityDie.subscribe(
 
       case EntityDamageCause.none:
         deathMessage = "umarł";
+
+        if (!player.hasTag("border_reah")) {
+          if (player.hasTag("border_outside")) {
+            deathMessage = "zabity przez";
+            killer = "border";
+          }
+        }
         break;
 
       default:
         deathMessage = "zabity przez " + cause;
         break;
     }
-    
+
     console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " Killer:" + killer + " UsedName:" + usedName);
   },
   { entityTypes: ["minecraft:player"] },
