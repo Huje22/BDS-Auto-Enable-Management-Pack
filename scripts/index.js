@@ -3,6 +3,7 @@ import "./death.js";
 import "./player.js";
 // import "./borded.js"
 import { getTps } from "./tps.js";
+import { getPostion } from "./Util.js";
 
 const appHandledMessages = false;
 export const mcprefix = "§7[§aBDS§1 Auto Enable§a]§r ";
@@ -18,8 +19,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
   switch (event.id) {
     case "bds:tag_prefix":
-      console.log(event.message);
-
       const args = event.message.split(' ');
       const playerName = args[0];
       const restOfMessage = args.slice(1).join(' ');
@@ -50,7 +49,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
     data.cancel = true;
   } else {
     if (message.startsWith("!")) {
-      console.log("PlayerCommand:" + name + " Command:" + message + " Op:" + player.isOp());
+      console.log("PlayerCommand:" + name + " Command:" + message + " Position:" + getPostion(player.location) + " Op:" + player.isOp());
       data.cancel = true;
       return;
     }
@@ -59,7 +58,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
       cooldowns.set(name, Date.now());
     }
 
-    console.log("PlayerChat:" + name + " Message:" + message);
+    console.log("PlayerChat:" + name + " Message:" + message + " Position:" + getPostion(player.location));
     data.cancel = appHandledMessages;
   }
 },

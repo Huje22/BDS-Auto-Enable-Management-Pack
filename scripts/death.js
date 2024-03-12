@@ -1,4 +1,5 @@
 import { world, EntityDamageCause, Player } from "@minecraft/server";
+import { getPostion } from "./Util";
 
 world.afterEvents.entityDie.subscribe(
   ({ deadEntity: player, damageSource: { cause, damagingEntity, damagingProjectile } }) => {
@@ -93,7 +94,7 @@ world.afterEvents.entityDie.subscribe(
         deathMessage = "został przebity przez spadający stalaktyt"
         break;
 
-      case EntityDamageCause.suicide:
+      case EntityDamageCause.selfDestruct:
         deathMessage = "popełnił samobójstwo"
         break;
 
@@ -113,7 +114,7 @@ world.afterEvents.entityDie.subscribe(
         break;
     }
 
-    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " Killer:" + killer + " UsedName:" + usedName);
+    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " Position:" + getPostion(player.location) + " Killer:" + killer + " UsedName:" + usedName);
   },
   { entityTypes: ["minecraft:player"] },
 );

@@ -1,29 +1,18 @@
 import { world } from "@minecraft/server";
+import { getPostion } from "./Util";
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const name = event.player.name;
   const block = event.block;
 
-  const x = block.location.x.toFixed(2);
-  const y = block.location.y.toFixed(2);
-  const z = block.location.z.toFixed(2);
-
-  const position = "X: " + x + " Y:" + y + " Z:" + z;
-
-  console.log("PlayerBreakBlock:" + name + " Block:" + block.typeId + " Position:" + position);
+  console.log("PlayerBreakBlock:" + name + " Block:" + block.typeId + " Position:" + getPostion(block.location));
 });
 
 world.afterEvents.playerPlaceBlock.subscribe((event) => {
   const name = event.player.name;
   const block = event.block;
 
-  const x = block.location.x.toFixed(2);
-  const y = block.location.y.toFixed(2);
-  const z = block.location.z.toFixed(2);
-
-  const position = "X: " + x + " Y:" + y + " Z:" + z;
-
-  console.log("PlayerPlaceBlock:" + name + " Block:" + block.typeId + " Position:" + position);
+  console.log("PlayerPlaceBlock:" + name + " Block:" + block.typeId + " Position:" + getPostion(block.location));
 });
 
 
@@ -40,5 +29,8 @@ world.afterEvents.playerDimensionChange.subscribe(({ player, fromDimension, from
   // console.log("Lokacja przed zmianą wymiaru: " + fromLocation.x + " " + fromLocation.y + " " + fromLocation.z);
   // console.log("Lokacja po zmianie wymiaru: " + toLocation.x + " " + toLocation.y + " " + toLocation.z);
 
-  console.log("DimensionChangePlayer: " + player.name + " From:" + fromDimension.id + " To:" + toDimension.id)
+  console.log("DimensionChangePlayer: " + player.name + " FromDimension:" + fromDimension.id
+    + " ToDimension:" + toDimension.id + " FromPosition:" + getPostion(fromLocation) + " ToPosition:" + getPostion(toLocation)
+
+  )
 });
