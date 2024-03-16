@@ -10,6 +10,10 @@ Kod użyty z:
 https://github.com/Huje22/BDS-Auto-Enable-Management-Pack
 */
 
+
+
+//TODO: Dodać info na actionbar jak jest się blisko borderu (10kratek)
+
 system.runInterval(() => checkAllPlayers(), 1);
 
 function checkAllPlayers() {
