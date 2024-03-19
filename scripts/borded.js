@@ -10,10 +10,6 @@ Kod użyty z:
 https://github.com/Huje22/BDS-Auto-Enable-Management-Pack
 */
 
-
-
-//TODO: Dodać info na actionbar jak jest się blisko borderu (10kratek)
-
 system.runInterval(() => checkAllPlayers(), 1);
 
 function checkAllPlayers() {
@@ -23,11 +19,11 @@ function checkAllPlayers() {
         const playerX = player.location.x;
         const playerZ = player.location.z;
 
-        const areaX1 = 20;
-        const areaX2 = -20;
+        const areaX1 = 10;
+        const areaX2 = -10;
 
-        const areaZ1 = -20;
-        const areaZ2 = 20;
+        const areaZ1 = -10;
+        const areaZ2 = 10;
 
         const isInArea = isPlayerInArea(playerX, playerZ, areaX1, areaX2, areaZ1, areaZ2);
         const distanceToSafe = distanceToNearestEdge(playerX, playerZ, areaX1, areaX2, areaZ1, areaZ2);
@@ -35,16 +31,7 @@ function checkAllPlayers() {
         if (!isInArea) {
             if (!player.hasTag("border_reah")) {
                 player.sendMessage(mcprefix + "§cZnajdujesz się w niebezpiecznym obszarze")
-
-                /*
-                let damnageToAply = Math.floor(distanceToSafe / 2) + 1;
-                if (Math.floor(damnageToAply.toFixed(0)) == 0) {
-                    damnageToAply = Math.floor(Math.random() * 6) + 1;
-                }
-                player.applyDamage(damnageToAply);
-                */
-
-
+                
                 let teleportX;
                 let teleportZ;
 
@@ -69,22 +56,35 @@ function checkAllPlayers() {
                 player.addTag("border_outside");
             }
         } else {
+            if (distanceToSafe <= 100) {
+                const coords = nearestEdgeCoordinates(playerX, playerZ, areaX1, areaX2, areaZ1, areaZ2);
+
+                player.onScreenDisplay.setActionBar(mcprefix + `§aDo borderu zostało ci:§b ` + distanceToSafe + '§a bloków');
+
+                for (let i = 0; i < coords.length; i++) {
+                    const distanceInfo = coords[i];
+                    spawnParticle(player, "minecraft:totem_particle", distanceInfo)
+                }
+            }
+
             player.removeTag("border_outside");
         }
     }
 }
 
+function spawnParticle(player, particleName, location) {
+    player.spawnParticle(particleName, { x: location.x, y: player.location.y + 1, z: location.z });
+}
+
 function teleport(teleportX, teleportZ, player) {
     const targetBlockLocation = { x: parseFloat(teleportX), y: player.location.y, z: parseFloat(teleportZ) };
     const targetBlock = player.dimension.getBlock(targetBlockLocation);
-    if (!targetBlock)  return;
-    
+    if (!targetBlock) return;
 
     if (targetBlock.isAir) {
         player.teleport(targetBlockLocation);
-    } else{
-        player.applyDamage(0.5);
-        
+    } else {
+        player.applyDamage(2);
     }
 }
 
@@ -108,10 +108,18 @@ function distanceToNearestEdge(playerX, playerZ, x1, x2, z1, z2) {
 
     let nearestDistance = Math.min(...distances);
 
-    if (Math.floor(nearestDistance.toFixed(0)) == 0) {
-        nearestDistance = 1;
-    }
-
-    return nearestDistance.toFixed(0);
+    return Math.ceil(nearestDistance);
 }
 
+function nearestEdgeCoordinates(playerX, playerZ, x1, x2, z1, z2) {
+    const distances = [
+        { distance: Math.abs(playerX - x1), x: x1, z: playerZ },
+        { distance: Math.abs(playerX - x2), x: x2, z: playerZ },
+        { distance: Math.abs(playerZ - z1), x: playerX, z: z1 },
+        { distance: Math.abs(playerZ - z2), x: playerX, z: z2 }
+    ];
+
+    distances.sort((a, b) => a.distance - b.distance);
+
+    return distances;
+}
