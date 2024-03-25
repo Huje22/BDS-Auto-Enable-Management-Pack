@@ -19,7 +19,7 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
 
   switch (event.id) {
     case "bds:tag_prefix":
-      const args = event.message.split(' ');
+      const args = event.message.split('=');
       const playerName = args[0];
       const restOfMessage = args.slice(1).join(' ');
 
