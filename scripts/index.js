@@ -49,7 +49,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
     data.cancel = true;
   } else {
     if (message.startsWith("!")) {
-      console.log("PlayerCommand:" + name + " Command:" + message + " Position:" + getPostion(player.location) + " Op:" + player.isOp());
+      console.log("PlayerCommand:" + name + " Command:" + message + " Position:" + getPostion(player.location, player.dimension) + " Op:" + player.isOp());
       data.cancel = true;
       return;
     }
@@ -58,7 +58,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
       cooldowns.set(name, Date.now());
     }
 
-    console.log("PlayerChat:" + name + " Message:" + message + " Position:" + getPostion(player.location));
+    console.log("PlayerChat:" + name + " Message:" + message + " Position:" + getPostion(player.location, player.dimension));
     data.cancel = appHandledMessages;
   }
 },
