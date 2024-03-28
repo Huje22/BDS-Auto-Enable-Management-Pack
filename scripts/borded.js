@@ -19,19 +19,25 @@ function checkAllPlayers() {
         const playerX = player.location.x;
         const playerZ = player.location.z;
 
-        const areaX1 = 10;
-        const areaX2 = -10;
+        const areaX1 = 100;
+        const areaX2 = -100;
 
-        const areaZ1 = -10;
-        const areaZ2 = 10;
+        const areaZ1 = -100;
+        const areaZ2 = 100;
+
+        const safeX = (areaX1 + areaX2) / 2;
+        const safeZ = (areaZ1 + areaZ2) / 2;
+
 
         const isInArea = isPlayerInArea(playerX, playerZ, areaX1, areaX2, areaZ1, areaZ2);
-        const distanceToSafe = distanceToNearestEdge(playerX, playerZ, areaX1, areaX2, areaZ1, areaZ2);
+        const distanceToSafe = distanceToNearestEdge(playerX, playerZ, areaX1, areaX2, areaZ1, areaZ2, safeX, safeZ);
+
 
         if (!isInArea) {
             if (!player.hasTag("border_reah")) {
                 player.sendMessage(mcprefix + "§cZnajdujesz się w niebezpiecznym obszarze")
-                
+                console.log(player.name + " " + playerX + " " + playerZ);
+
                 let teleportX;
                 let teleportZ;
 
@@ -47,16 +53,16 @@ function checkAllPlayers() {
                     teleportZ = playerZ - Math.abs(distanceToSafe);
                 }
 
-
                 // world.sendMessage("z " + teleportZ);
                 // world.sendMessage("x " + teleportX);
 
                 teleport(teleportX, teleportZ, player);
 
                 player.addTag("border_outside");
+                player.onScreenDisplay.setActionBar(mcprefix + `§aDo bezpiecznego obszaru zostało ci:§b ` + distanceToSafe + '§a bloków');
             }
         } else {
-            if (distanceToSafe <= 100) {
+            if (distanceToSafe <= 50) {
                 const coords = nearestEdgeCoordinates(playerX, playerZ, areaX1, areaX2, areaZ1, areaZ2);
 
                 player.onScreenDisplay.setActionBar(mcprefix + `§aDo borderu zostało ci:§b ` + distanceToSafe + '§a bloków');
@@ -73,18 +79,29 @@ function checkAllPlayers() {
 }
 
 function spawnParticle(player, particleName, location) {
-    player.spawnParticle(particleName, { x: location.x, y: player.location.y + 1, z: location.z });
+    try {
+        player.spawnParticle(particleName, { x: location.x, y: player.location.y + 1, z: location.z });
+    } catch (error) {
+    }
 }
 
 function teleport(teleportX, teleportZ, player) {
-    const targetBlockLocation = { x: parseFloat(teleportX), y: player.location.y, z: parseFloat(teleportZ) };
-    const targetBlock = player.dimension.getBlock(targetBlockLocation);
-    if (!targetBlock) return;
+    const damage = 2;
+    try {
+        const targetBlockLocation = { x: parseFloat(teleportX), y: player.location.y, z: parseFloat(teleportZ) };
+        const targetBlock = player.dimension.getBlock(targetBlockLocation);
+        if (!targetBlock) {
+            player.applyDamage(damage);
+            return;
+        }
 
-    if (targetBlock.isAir) {
-        player.teleport(targetBlockLocation);
-    } else {
-        player.applyDamage(2);
+        if (targetBlock.isAir) {
+            player.teleport(targetBlockLocation);
+        } else {
+            player.applyDamage(damage);
+        }
+    } catch (error) {
+        player.applyDamage(damage);
     }
 }
 
@@ -98,7 +115,7 @@ function isPlayerInArea(playerX, playerZ, x1, x2, z1, z2) {
     return playerX >= minX && playerX <= maxX && playerZ >= minZ && playerZ <= maxZ;
 }
 
-function distanceToNearestEdge(playerX, playerZ, x1, x2, z1, z2) {
+function distanceToNearestEdge(playerX, playerZ, x1, x2, z1, z2, safeX, safeZ) {
     const distances = [
         Math.abs(playerX - x1),
         Math.abs(playerX - x2),
@@ -107,6 +124,11 @@ function distanceToNearestEdge(playerX, playerZ, x1, x2, z1, z2) {
     ];
 
     let nearestDistance = Math.min(...distances);
+
+    if (playerX < Math.min(x1, x2) || playerX > Math.max(x1, x2) || playerZ < Math.min(z1, z2) || playerZ > Math.max(z1, z2)) {
+        const distanceToSafe = Math.sqrt(Math.pow(playerX - safeX, 2) + Math.pow(playerZ - safeZ, 2));
+        nearestDistance = Math.min(nearestDistance, distanceToSafe);
+    }
 
     return Math.ceil(nearestDistance);
 }
