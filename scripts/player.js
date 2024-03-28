@@ -15,7 +15,6 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => {
   console.log("PlayerPlaceBlock:" + name + " Block:" + block.typeId + " Position:" + getPostion(block.location));
 });
 
-
 world.afterEvents.playerSpawn.subscribe(
   ({ player, initialSpawn }) => {
     if (initialSpawn) console.log("PlayerJoin:" + player.name);
@@ -34,3 +33,23 @@ world.afterEvents.playerDimensionChange.subscribe(({ player, fromDimension, from
 
   )
 });
+
+world.afterEvents.playerInteractWithBlock.subscribe((event) => {
+  const block = event.block;
+  const blockID = block.typeId;
+
+  if (blockID.includes("ender")) {
+    console.log("PlayerContainerInteract:" + event.player.name + " Block:" + blockID + " Position:" + getPostion(block.location));
+  } if (block.getComponent("minecraft:inventory")) {
+    console.log("PlayerContainerInteract:" + event.player.name + " Block:" + blockID + " Position:" + getPostion(block.location));
+  }
+});
+
+world.afterEvents.playerInteractWithEntity.subscribe((event) => {
+  const target = event.target;
+
+  if (target.getComponent("minecraft:inventory")) {
+    console.log("PlayerEntityContainerInteract:" + event.player.name + " EntityID:" + target.typeId + " EntityPosition:" + getPostion(target.location));
+  }
+});
+
