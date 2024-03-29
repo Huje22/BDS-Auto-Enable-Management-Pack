@@ -1,11 +1,27 @@
 import { world } from "@minecraft/server";
 import { getPostion } from "./Util";
+import { mcprefix } from "./index.js";
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
-  const name = event.player.name;
+  const player = event.player;
+  const name = player.name;
   const block = event.block;
+  const blockId = block.typeId;
 
-  console.log("PlayerBreakBlock:" + name + " Block:" + block.typeId + " Position:" + getPostion(block.location, block.dimension));
+  for (const players of world.getAllPlayers()) {
+    if (players.hasTag("admin") || players.hasTag("adminPlus")) {
+      if (blockId == "minecraft:diamond_ore" || blockId == "minecraft:deepslate_diamond_ore") {
+        players.sendMessage(mcprefix + "§aGracz§b " + name + "§a wykopał§b diament§f x1 ")
+      } else if (blockId == "minecraft:ancient_debris") {
+        players.sendMessage(mcprefix + "§aGracz§b " + name + "§a wykopał§c pradawne szczątki§f x1 ")
+      } else if (blockId.includes("ore") && !blockId.includes("minecraft") && players.hasTag("adminPlus")) {
+        players.sendMessage(mcprefix + "§aGracz§b " + name + `§a wykopał§b ${blockId} §fx1 `)
+      }
+    }
+  }
+
+
+  console.log("PlayerBreakBlock:" + name + " Block:" + blockId + " Position:" + getPostion(block.location, block.dimension));
 });
 
 world.afterEvents.playerPlaceBlock.subscribe((event) => {
