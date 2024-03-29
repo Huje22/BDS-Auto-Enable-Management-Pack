@@ -48,13 +48,19 @@ world.beforeEvents.chatSend.subscribe((data) => {
     player.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
     data.cancel = true;
   } else {
+    let op = player.isOp();
+
+    if (!player.isOp()) {
+      op = player.hasTag("adminPlus");
+    }
+
     if (message.startsWith("!")) {
-      console.log("PlayerCommand:" + name + " Command:" + message + " Position:" + getPostion(player.location, player.dimension) + " Op:" + player.isOp());
+      console.log("PlayerCommand:" + name + " Command:" + message + " Position:" + getPostion(player.location, player.dimension) + " Op:" + op);
       data.cancel = true;
       return;
     }
 
-    if (!player.isOp()) {
+    if (!op) {
       cooldowns.set(name, Date.now());
     }
 
