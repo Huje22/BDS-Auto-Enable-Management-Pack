@@ -114,7 +114,7 @@ world.afterEvents.entityDie.subscribe(
         break;
     }
 
-    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " Position:" + getPostion(player.location) + " Killer:" + killer + " UsedName:" + usedName);
+    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " Position:" + getPostion(player.location, player.dimension) + " Killer:" + killer + " UsedName:" + usedName);
   },
   { entityTypes: ["minecraft:player"] },
 );
