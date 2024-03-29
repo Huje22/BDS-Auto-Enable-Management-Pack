@@ -54,14 +54,14 @@ world.beforeEvents.chatSend.subscribe((data) => {
       op = player.hasTag("adminPlus");
     }
 
+    if (!op) {
+      cooldowns.set(name, Date.now());
+    }
+
     if (message.startsWith("!")) {
       console.log("PlayerCommand:" + name + " Command:" + message + " Position:" + getPostion(player.location, player.dimension) + " Op:" + op);
       data.cancel = true;
       return;
-    }
-
-    if (!op) {
-      cooldowns.set(name, Date.now());
     }
 
     console.log("PlayerChat:" + name + " Message:" + message + " Position:" + getPostion(player.location, player.dimension));
