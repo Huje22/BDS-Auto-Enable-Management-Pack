@@ -22,7 +22,7 @@ world.afterEvents.entityDie.subscribe(
         } else {
           const killerNameTag = damagingEntity.nameTag;
           if (killerNameTag !== undefined && killerNameTag !== "") {
-            deathMessage = "zabity przez " + killerNameTag;
+            deathMessage = "zabity przez " + killerNameTag + " ("+ damagingEntity?.typeId +")";
             killer = killerNameTag;
           } else {
             deathMessage = "zabity przez " + damagingEntity?.typeId;
@@ -49,7 +49,7 @@ world.afterEvents.entityDie.subscribe(
         } else {
           const killerNameTag = damagingEntity.nameTag;
           if (killerNameTag !== undefined && killerNameTag !== "") {
-            deathMessage = "zastrzelony przez " + killerNameTag + " przy użyciu " + damagingProjectile?.typeId;
+            deathMessage = "zastrzelony przez " + killerNameTag + " ("+ damagingEntity?.typeId +") przy użyciu " + damagingProjectile?.typeId;
             killer = killerNameTag;
           } else {
             deathMessage = "zabity przez " + damagingEntity?.typeId;
