@@ -51,13 +51,16 @@ world.afterEvents.playerDimensionChange.subscribe(({ player, fromDimension, from
 });
 
 world.afterEvents.playerInteractWithBlock.subscribe((event) => {
+  const player = event.player;
   const block = event.block;
   const blockID = block.typeId;
 
+  if (player.isSneaking && event.itemStack !== undefined)  return;
+  
   if (blockID.includes("ender")) {
-    console.log("PlayerContainerInteract:" + event.player.name + " Block:" + blockID + " Position:" + getPostion(block.location, block.dimension));
+    console.log("PlayerContainerInteract:" + player.name + " Block:" + blockID + " Position:" + getPostion(block.location, block.dimension));
   } if (block.getComponent("minecraft:inventory")) {
-    console.log("PlayerContainerInteract:" + event.player.name + " Block:" + blockID + " Position:" + getPostion(block.location, block.dimension));
+    console.log("PlayerContainerInteract:" + player.name + " Block:" + blockID + " Position:" + getPostion(block.location, block.dimension));
   }
 });
 
