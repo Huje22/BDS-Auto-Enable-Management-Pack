@@ -1,4 +1,4 @@
-import { world } from "@minecraft/server";
+import { world , Player} from "@minecraft/server";
 import { getPostion } from "./Util";
 import { mcprefix } from "./index.js";
 
