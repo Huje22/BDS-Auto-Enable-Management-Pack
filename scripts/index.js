@@ -4,6 +4,7 @@ import "./player.js";
 // import "./borded.js"
 import { getTps } from "./tps.js";
 import { getPostion } from "./Util.js";
+import "./movement.js";
 
 const appHandledMessages = false;
 export const mcprefix = "§7[§aBDS§1 Auto Enable§a]§r ";
