@@ -2,7 +2,10 @@ import { world, EntityDamageCause, Player } from "@minecraft/server";
 import { getPostion } from "./Util";
 
 world.afterEvents.entityDie.subscribe(
-  ({ deadEntity: player, damageSource: { cause, damagingEntity, damagingProjectile } }) => {
+  ({
+    deadEntity: player,
+    damageSource: { cause, damagingEntity, damagingProjectile },
+  }) => {
     const name = player.name;
     let killer = "none";
     let deathMessage;
@@ -11,18 +14,26 @@ world.afterEvents.entityDie.subscribe(
     switch (cause) {
       case EntityDamageCause.entityAttack:
         if (damagingEntity instanceof Player) {
-          const itemName = damagingEntity.getComponent("inventory").container.getSlot(damagingEntity.selectedSlot).getItem().nameTag;
+          const itemName = damagingEntity
+            .getComponent("inventory")
+            .container.getSlot(damagingEntity.selectedSlot)
+            .getItem().nameTag;
 
           if (itemName !== undefined) {
             usedName = itemName;
           }
 
           deathMessage = "zabity przez gracza " + damagingEntity.name;
-          killer = damagingEntity.name
+          killer = damagingEntity.name;
         } else {
           const killerNameTag = damagingEntity.nameTag;
           if (killerNameTag !== undefined && killerNameTag !== "") {
-            deathMessage = "zabity przez " + killerNameTag + " (" + damagingEntity?.typeId + ")";
+            deathMessage =
+              "zabity przez " +
+              killerNameTag +
+              " (" +
+              damagingEntity?.typeId +
+              ")";
             killer = killerNameTag;
           } else {
             deathMessage = "zabity przez " + damagingEntity?.typeId;
@@ -39,17 +50,30 @@ world.afterEvents.entityDie.subscribe(
 
       case EntityDamageCause.projectile:
         if (damagingEntity instanceof Player) {
-          const itemName = damagingEntity.getComponent("inventory").container.getSlot(damagingEntity.selectedSlot).getItem().nameTag;
+          const itemName = damagingEntity
+            .getComponent("inventory")
+            .container.getSlot(damagingEntity.selectedSlot)
+            .getItem().nameTag;
 
           if (itemName !== undefined) {
             usedName = itemName;
           }
-          deathMessage = "zastrzelony przez gracza " + damagingEntity.name + " przy użyciu " + damagingProjectile?.typeId;
+          deathMessage =
+            "zastrzelony przez gracza " +
+            damagingEntity.name +
+            " przy użyciu " +
+            damagingProjectile?.typeId;
           killer = damagingEntity?.name;
         } else {
           const killerNameTag = damagingEntity.nameTag;
           if (killerNameTag !== undefined && killerNameTag !== "") {
-            deathMessage = "zastrzelony przez " + killerNameTag + " (" + damagingEntity?.typeId + ") przy użyciu " + damagingProjectile?.typeId;
+            deathMessage =
+              "zastrzelony przez " +
+              killerNameTag +
+              " (" +
+              damagingEntity?.typeId +
+              ") przy użyciu " +
+              damagingProjectile?.typeId;
             killer = killerNameTag;
           } else {
             deathMessage = "zabity przez " + damagingEntity?.typeId;
@@ -63,39 +87,39 @@ world.afterEvents.entityDie.subscribe(
         break;
 
       case EntityDamageCause.drowning:
-        deathMessage = "utonoł"
+        deathMessage = "utonoł";
         break;
 
       case EntityDamageCause.fireTick:
-        deathMessage = "stanoł w płomieniach"
+        deathMessage = "stanoł w płomieniach";
         break;
 
       case EntityDamageCause.suffocation:
-        deathMessage = "zadusił się w ścianie"
+        deathMessage = "zadusił się w ścianie";
         break;
 
       case EntityDamageCause.flyIntoWall:
-        deathMessage = "wleciał w ściane"
+        deathMessage = "wleciał w ściane";
         break;
 
       case EntityDamageCause.anvil:
-        deathMessage = "został zgnieciony przez spadające kowadło"
+        deathMessage = "został zgnieciony przez spadające kowadło";
         break;
 
       case EntityDamageCause.freezing:
-        deathMessage = "zamarzł"
+        deathMessage = "zamarzł";
         break;
 
       case EntityDamageCause.fireworks:
-        deathMessage = "eksplodował z hukiem"
+        deathMessage = "eksplodował z hukiem";
         break;
 
       case EntityDamageCause.stalactite:
-        deathMessage = "został przebity przez spadający stalaktyt"
+        deathMessage = "został przebity przez spadający stalaktyt";
         break;
 
       case EntityDamageCause.selfDestruct:
-        deathMessage = "popełnił samobójstwo"
+        deathMessage = "popełnił samobójstwo";
         break;
 
       case EntityDamageCause.none:
@@ -114,7 +138,18 @@ world.afterEvents.entityDie.subscribe(
         break;
     }
 
-    console.log("PlayerDeath:" + name + " DeathMessage:" + deathMessage + " Position:" + getPostion(player.location, player.dimension) + " Killer:" + killer + " UsedName:" + usedName);
+    console.log(
+      "PlayerDeath:" +
+        name +
+        " DeathMessage:" +
+        deathMessage +
+        " Position:" +
+        getPostion(player.location, player.dimension) +
+        " Killer:" +
+        killer +
+        " UsedName:" +
+        usedName
+    );
   },
-  { entityTypes: ["minecraft:player"] },
+  { entityTypes: ["minecraft:player"] }
 );

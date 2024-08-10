@@ -17,24 +17,23 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
   //   "sourceType:", event.sourceType
   // );
 
-
   switch (event.id) {
     case "bds:tag_prefix":
-      const args = event.message.split('=');
+      const args = event.message.split("=");
       const playerName = args[0];
-      const restOfMessage = args.slice(1).join(' ');
+      const restOfMessage = args.slice(1).join(" ");
 
       const [player] = world.getPlayers({
-        name: playerName
-      })
+        name: playerName,
+      });
 
       if (player !== undefined && restOfMessage !== "") {
-        player.nameTag = restOfMessage + player.name
+        player.nameTag = restOfMessage + player.name;
       }
       break;
 
     case "bds:tps":
-      getTps();;
+      getTps();
       break;
   }
 });
@@ -60,17 +59,32 @@ world.beforeEvents.chatSend.subscribe((data) => {
     }
 
     if (message.startsWith("!")) {
-      console.log("PlayerCommand:" + name + " Command:" + message + " Position:" + getPostion(player.location, player.dimension) + " Op:" + op);
+      console.log(
+        "PlayerCommand:" +
+          name +
+          " Command:" +
+          message +
+          " Position:" +
+          getPostion(player.location, player.dimension) +
+          " Op:" +
+          op
+      );
       data.cancel = true;
       return;
     }
 
-    console.log("PlayerChat:" + name + " Message:" + message + " Position:" + getPostion(player.location, player.dimension));
+    console.log(
+      "PlayerChat:" +
+        name +
+        " Message:" +
+        message +
+        " Position:" +
+        getPostion(player.location, player.dimension)
+    );
     data.cancel = appHandledMessages;
   }
-},
-);
+});
 
-world.sendMessage(mcprefix + '§3Wczytano!');
-console.log(consoleprefix + 'Wczytano!');
+world.sendMessage(mcprefix + "§3Wczytano!");
+console.log(consoleprefix + "Wczytano!");
 system.runTimeout(() => getTps(), 40);
