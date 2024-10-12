@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Huje22/BDS-Auto-Enable-Management-Pack#readme",
   "dependencies": {
-    "@minecraft/server": "^1.14.0-beta.1.21.20-stable"
+    "@minecraft/server": "^1.15.0-beta.1.21.31-stable"
   }
 }
