@@ -2,6 +2,13 @@ import { world, Player } from "@minecraft/server";
 import { getPostion } from "./Util";
 import { mcprefix } from "./index.js";
 
+// world.afterEvents.playerInputModeChange.subscribe((event) => {
+//   const player = event.player;
+
+//   console.log(player.name);
+//   console.log(event.newInputModeUsed);
+// });
+
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const player = event.player;
   const name = player.name;
@@ -61,7 +68,18 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => {
 });
 
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-  if (initialSpawn) console.log("PlayerJoin:" + player.name);
+  if (initialSpawn) {
+    console.log(
+      "PlayerJoin:" +
+        player.name +
+        " PlayerPlatform:" +
+        player.clientSystemInfo.platformType +
+        " MemoryTier:" +
+        player.clientSystemInfo.memoryTier +
+        " MaxRenderDistance:" +
+        player.clientSystemInfo.maxRenderDistance
+    );
+  }
   console.log("PlayerSpawn:" + player.name);
 });
 
