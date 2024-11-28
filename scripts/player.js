@@ -68,6 +68,7 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => {
 });
 
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
+  //TODO: Dodać info dla admina z takiem adminPlus czy jakos tak, info na czym ktos gra i jego tier ramu
   if (initialSpawn) {
     console.log(
       "PlayerJoin:" +
