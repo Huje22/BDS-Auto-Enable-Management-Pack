@@ -67,14 +67,26 @@ world.afterEvents.playerPlaceBlock.subscribe((event) => {
   );
 });
 
+world.afterEvents.playerInputModeChange.subscribe((event) => {
+  console.log(
+    "PlayerInput:" +
+      event.player.name +
+      " NewInputMode:" +
+      event.newInputModeUsed +
+      " OldInputMode:" +
+      event.previousInputModeUsed
+  );
+});
+
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
-  //TODO: Dodać info dla admina z takiem adminPlus czy jakos tak, info na czym ktos gra i jego tier ramu
   if (initialSpawn) {
     console.log(
       "PlayerJoin:" +
         player.name +
         " PlayerPlatform:" +
         player.clientSystemInfo.platformType +
+        " PlayerInput:"+
+        player.inputInfo.lastInputModeUsed +
         " MemoryTier:" +
         player.clientSystemInfo.memoryTier +
         " MaxRenderDistance:" +
