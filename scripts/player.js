@@ -104,7 +104,7 @@ world.afterEvents.playerDimensionChange.subscribe(
     // console.log("Lokacja po zmianie wymiaru: " + toLocation.x + " " + toLocation.y + " " + toLocation.z);
 
     console.log(
-      "DimensionChangePlayer: " +
+      "DimensionChangePlayer:" +
         player.name +
         " FromDimension:" +
         fromDimension.id +
