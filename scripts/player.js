@@ -92,6 +92,7 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         " MaxRenderDistance:" +
         player.clientSystemInfo.maxRenderDistance
     );
+    TODO: Dodać info dla admina o zmianie kontrolera i o dołączeniu z czym dołącza gracz
   }
   console.log("PlayerSpawn:" + player.name);
 });
