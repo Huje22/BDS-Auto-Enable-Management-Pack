@@ -10,6 +10,9 @@ const appHandledMessages = false;
 export const mcprefix = "§7[§aBDS§1 Auto Enable§a]§r ";
 export const consoleprefix = "[BDS Auto Enable] ";
 
+const prefix = new Map();
+const belowName = new Map();
+
 system.afterEvents.scriptEventReceive.subscribe((event) => {
   // console.log(
   //   "id:", event.id,
@@ -17,18 +20,28 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
   //   "sourceType:", event.sourceType
   // );
 
+  const args = event.message.split("=");
+  const playerName = args[0];
+  const restOfMessage = args.slice(1).join(" ");
+
+  const [player] = world.getPlayers({
+    name: playerName,
+  });
+
+console.log(player.name)
+
   switch (event.id) {
     case "bds:tag_prefix":
-      const args = event.message.split("=");
-      const playerName = args[0];
-      const restOfMessage = args.slice(1).join(" ");
-
-      const [player] = world.getPlayers({
-        name: playerName,
-      });
-
       if (player !== undefined && restOfMessage !== "") {
-        player.nameTag = restOfMessage + player.name;
+        player.nameTag = restOfMessage + player.name + "\n" + getbelowName(playerName);
+        prefix.set(playerName, restOfMessage);
+      }
+      break;
+
+    case "bds:tag_belowName":
+      if (player !== undefined && restOfMessage !== "") {
+        player.nameTag = getPrefix(playerName) + player.name + "\n" + restOfMessage;
+        belowName.set(playerName, restOfMessage);
       }
       break;
 
@@ -37,6 +50,16 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
       break;
   }
 });
+
+function getbelowName(playerName){
+  const belowNameName = belowName.get(playerName);
+  return belowNameName == undefined ? "" : belowNameName
+}
+
+function getPrefix(playerName){
+  const prefixName = prefix.get(playerName);
+  return prefixName == undefined ? "" : prefixName
+}
 
 const cooldowns = new Map();
 world.beforeEvents.chatSend.subscribe((data) => {
