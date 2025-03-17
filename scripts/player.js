@@ -1,5 +1,5 @@
 import { world, Player } from "@minecraft/server";
-import { getPostion } from "./Util";
+import { getPostion, sendToAdmins } from "./Util";
 import { mcprefix } from "./index.js";
 
 // world.afterEvents.playerInputModeChange.subscribe((event) => {
@@ -80,19 +80,30 @@ world.afterEvents.playerInputModeChange.subscribe((event) => {
 
 world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
   if (initialSpawn) {
-    console.log(
-      "PlayerJoin:" +
+    const memoryTiers = {
+      0: "Max 1,5GB",
+      1: "Max 2GB",
+      2: "Max 4GB",
+      3: "Max 8GB",
+      4: "Więcej niż 8GB",
+    };
+
+    const memory =
+      memoryTiers[player.clientSystemInfo.memoryTier] || "Niewiadomo";
+
+    sendToAdmins(
+      mcprefix +
+        "§aGracz:§b " +
         player.name +
-        " PlayerPlatform:" +
+        "§a dołączył używając §b" +
         player.clientSystemInfo.platformType +
-        " PlayerInput:"+
+        "§4:§b" +
         player.inputInfo.lastInputModeUsed +
-        " MemoryTier:" +
-        player.clientSystemInfo.memoryTier +
-        " MaxRenderDistance:" +
+        "§a posiadając§b " +
+        memory +
+        "§a pamięci ram, maksymalne chunki gracza to:§b " +
         player.clientSystemInfo.maxRenderDistance
     );
-    TODO: Dodać info dla admina o zmianie kontrolera i o dołączeniu z czym dołącza gracz
   }
   console.log("PlayerSpawn:" + player.name);
 });
