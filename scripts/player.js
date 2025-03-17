@@ -104,6 +104,19 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         "§a pamięci ram, maksymalne chunki gracza to:§b " +
         player.clientSystemInfo.maxRenderDistance
     );
+
+    console.log(
+      "PlayerJoin:" +
+        player.name +
+        " PlayerPlatform:" +
+        player.clientSystemInfo.platformType +
+        " PlayerInput:" +
+        player.inputInfo.lastInputModeUsed +
+        " MemoryTier:" +
+        player.clientSystemInfo.memoryTier +
+        " MaxRenderDistance:" +
+        player.clientSystemInfo.maxRenderDistance
+    );
   }
   console.log("PlayerSpawn:" + player.name);
 });
