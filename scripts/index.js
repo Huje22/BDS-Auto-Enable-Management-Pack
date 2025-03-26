@@ -108,6 +108,9 @@ world.beforeEvents.chatSend.subscribe((data) => {
   }
 });
 
-world.sendMessage(mcprefix + "§3Wczytano!");
+system.run(() => {
+  world.sendMessage(mcprefix + "§3Wczytano!");
+});
+
 console.log(consoleprefix + "Wczytano!");
 system.runTimeout(() => getTps(), 40);
