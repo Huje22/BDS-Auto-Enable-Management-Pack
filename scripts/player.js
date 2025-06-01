@@ -15,32 +15,19 @@ world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const block = event.block;
   const blockId = block.typeId;
 
-  for (const players of world.getAllPlayers()) {
-    if (players.hasTag("admin") || players.hasTag("adminPlus")) {
-      if (
-        blockId == "minecraft:diamond_ore" ||
-        blockId == "minecraft:deepslate_diamond_ore"
-      ) {
-        players.sendMessage(
-          mcprefix + "§aGracz§b " + name + "§a wykopał§b diament§f x1 "
-        );
-      } else if (blockId == "minecraft:ancient_debris") {
-        players.sendMessage(
-          mcprefix +
-            "§aGracz§b " +
-            name +
-            "§a wykopał§c pradawne szczątki§f x1 "
-        );
-      } else if (
-        blockId.includes("ore") &&
-        !blockId.includes("minecraft") &&
-        players.hasTag("adminPlus")
-      ) {
-        players.sendMessage(
-          mcprefix + "§aGracz§b " + name + `§a wykopał§b ${blockId} §fx1 `
-        );
-      }
-    }
+  if (
+    blockId == "minecraft:diamond_ore" ||
+    blockId == "minecraft:deepslate_diamond_ore"
+  ) {
+    sendToAdmins(mcprefix + "§aGracz§b " + name + "§a wykopał§b diament§f x1 ");
+  } else if (blockId == "minecraft:ancient_debris") {
+    sendToAdmins(
+      mcprefix + "§aGracz§b " + name + "§a wykopał§c pradawne szczątki§f x1 "
+    );
+  } else if (blockId.includes("ore") && !blockId.includes("minecraft")) {
+    sendToAdmins(
+      mcprefix + "§aGracz§b " + name + `§a wykopał§b ${blockId} §fx1 `
+    );
   }
 
   console.log(
@@ -102,7 +89,9 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         "§a posiadając§b " +
         memory +
         "§a pamięci ram, maksymalne chunki gracza to:§b " +
-        player.clientSystemInfo.maxRenderDistance
+        player.clientSystemInfo.maxRenderDistance + 
+        " §aUżywa trybu graficznego:§b " +
+        player.graphicsMode
     );
 
     console.log(
@@ -115,7 +104,9 @@ world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {
         " MemoryTier:" +
         player.clientSystemInfo.memoryTier +
         " MaxRenderDistance:" +
-        player.clientSystemInfo.maxRenderDistance
+        player.clientSystemInfo.maxRenderDistance +
+        " GraphicMode:" +
+        player.graphicsMode
     );
   }
   console.log("PlayerSpawn:" + player.name);
