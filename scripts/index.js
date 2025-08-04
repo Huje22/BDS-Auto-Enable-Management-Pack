@@ -7,7 +7,7 @@ import { getPostion } from "./Util.js";
 import "./movement.js";
 
 const appHandledMessages = false;
-export const mcprefix = "§7[§aBDS§1 Auto Enable§a]§r ";
+export const mcprefix = "§7[§aBDS§1 Auto Enable§7]§r ";
 export const consoleprefix = "[BDS Auto Enable] ";
 
 const prefix = new Map();
