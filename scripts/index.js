@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server";
 import "./death.js";
 import "./player.js";
-// import "./borded.js"
+// import "./borde.js"
 import { getTps } from "./tps.js";
 import { getPostion } from "./Util.js";
 import "./movement.js";
@@ -28,19 +28,21 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
     name: playerName,
   });
 
-console.log(player.name)
+  console.log(player.name);
 
   switch (event.id) {
     case "bds:tag_prefix":
       if (player !== undefined && restOfMessage !== "") {
-        player.nameTag = restOfMessage + player.name + "\n" + getbelowName(playerName);
+        player.nameTag =
+          restOfMessage + player.name + "\n" + getbelowName(playerName);
         prefix.set(playerName, restOfMessage);
       }
       break;
 
     case "bds:tag_belowName":
       if (player !== undefined && restOfMessage !== "") {
-        player.nameTag = getPrefix(playerName) + player.name + "\n" + restOfMessage;
+        player.nameTag =
+          getPrefix(playerName) + player.name + "\n" + restOfMessage;
         belowName.set(playerName, restOfMessage);
       }
       break;
@@ -51,14 +53,14 @@ console.log(player.name)
   }
 });
 
-function getbelowName(playerName){
+function getbelowName(playerName) {
   const belowNameName = belowName.get(playerName);
-  return belowNameName == undefined ? "" : belowNameName
+  return belowNameName == undefined ? "" : belowNameName;
 }
 
-function getPrefix(playerName){
+function getPrefix(playerName) {
   const prefixName = prefix.get(playerName);
-  return prefixName == undefined ? "" : prefixName
+  return prefixName == undefined ? "" : prefixName;
 }
 
 const cooldowns = new Map();
@@ -71,9 +73,11 @@ world.beforeEvents.chatSend.subscribe((data) => {
     player.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
     data.cancel = true;
   } else {
-    let op = player.isOp();
+    let op = false;
 
-    if (!player.isOp()) {
+    //RODO: player.commandPermissionLevel Użyj tego
+
+    if (!op) {
       op = player.hasTag("adminPlus");
     }
 
