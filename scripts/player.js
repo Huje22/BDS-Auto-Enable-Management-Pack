@@ -166,10 +166,7 @@ world.afterEvents.playerInteractWithBlock.subscribe((event) => {
 world.afterEvents.playerInteractWithEntity.subscribe((event) => {
   const target = event.target;
 
-  if (
-    !(target instanceof Player) &&
-    target.getComponent("minecraft:inventory")
-  ) {
+  if (!(target instanceof Player) && target.getComponent("minecraft:inventory")) {
     console.log(
       "PlayerEntityContainerInteract:" +
         event.player.name +

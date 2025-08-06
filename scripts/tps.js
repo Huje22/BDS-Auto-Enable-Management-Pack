@@ -31,7 +31,7 @@ export function getTps() {
     tpsMess += `§c${tps.toFixed(2)}/20.00`;
   }
 
-  if (tps < 19) {
+  if (tps < 17) {
     world.sendMessage(tpsMess);
   }
 
@@ -41,9 +41,11 @@ export function getTps() {
 system.runInterval(() => {
   getTps();
 }, 20 * 150);
-system.runInterval(() => {
-  getTps();
-}, 20 * 150 - 15);
-system.runInterval(() => {
-  getTps();
-}, 20 * 150 - 25);
+
+// system.runInterval(() => {
+//   getTps();
+// }, 20 * 150 - 15);
+//
+// system.runInterval(() => {
+//   getTps();
+// }, 20 * 150 - 25);

@@ -10,7 +10,7 @@ export function getPostion(location, dimension) {
 
 export function sendToAdmins(message) {
     for (const player of world.getAllPlayers())
-      if (player.hasTag("adminPlus") || player.isOp()) {
+      if (player.hasTag("adminPlus") || (player.playerPermissionLevel == 2)) {
         player.sendMessage(message);
       }
 }

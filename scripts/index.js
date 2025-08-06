@@ -73,9 +73,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
     player.sendMessage(mcprefix + "§cZwolnij troche! (2s)");
     data.cancel = true;
   } else {
-    let op = false;
-
-    //RODO: player.commandPermissionLevel Użyj tego
+    let op = (player.playerPermissionLevel == 2);
 
     if (!op) {
       op = player.hasTag("adminPlus");
