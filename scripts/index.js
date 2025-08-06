@@ -1,7 +1,7 @@
 import { world, system } from "@minecraft/server";
 import "./death.js";
 import "./player.js";
-// import "./borde.js"
+// import "./border.js"
 import { getTps } from "./tps.js";
 import { getPostion } from "./Util.js";
 import "./movement.js";

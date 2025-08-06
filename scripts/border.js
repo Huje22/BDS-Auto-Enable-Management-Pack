@@ -10,47 +10,38 @@ Kod użyty z:
 https://github.com/Huje22/BDS-Auto-Enable-Management-Pack
 */
 
+const areaX1 = 100;
+const areaX2 = -100;
+
+const areaZ1 = -100;
+const areaZ2 = 100;
+
 system.runInterval(() => checkAllPlayers(), 1);
+
+system.runInterval(() => {
+  for (const player of world.getAllPlayers()) {
+    if (player.hasTag("border_outside")) {
+      player.sendMessage(
+        mcprefix + "§cZnajdujesz się w niebezpiecznym obszarze"
+      );
+    }
+  }
+}, 20 * 10);
 
 function checkAllPlayers() {
   for (const player of world.getAllPlayers()) {
     const playerX = player.location.x;
     const playerZ = player.location.z;
 
-    const areaX1 = 100;
-    const areaX2 = -100;
-
-    const areaZ1 = -100;
-    const areaZ2 = 100;
-
     const safeX = (areaX1 + areaX2) / 2;
     const safeZ = (areaZ1 + areaZ2) / 2;
 
-    const isInArea = isPlayerInArea(
-      playerX,
-      playerZ,
-      areaX1,
-      areaX2,
-      areaZ1,
-      areaZ2
-    );
-    const distanceToSafe = distanceToNearestEdge(
-      playerX,
-      playerZ,
-      areaX1,
-      areaX2,
-      areaZ1,
-      areaZ2,
-      safeX,
-      safeZ
-    );
+    const isInArea = isPlayerInArea(playerX, playerZ);
+    const distanceToSafe = distanceToNearestEdge(playerX, playerZ, safeX, safeZ);
 
     if (!isInArea) {
       if (!player.hasTag("border_reah")) {
-        player.sendMessage(
-          mcprefix + "§cZnajdujesz się w niebezpiecznym obszarze"
-        );
-        console.log(player.name + " " + playerX + " " + playerZ);
+        // console.log(player.name + " " + playerX + " " + playerZ);
 
         let teleportX;
         let teleportZ;
@@ -82,14 +73,7 @@ function checkAllPlayers() {
       }
     } else {
       if (distanceToSafe <= 50) {
-        const coords = nearestEdgeCoordinates(
-          playerX,
-          playerZ,
-          areaX1,
-          areaX2,
-          areaZ1,
-          areaZ2
-        );
+        const coords = nearestEdgeCoordinates(playerX, playerZ);
 
         player.onScreenDisplay.setActionBar(
           mcprefix +
@@ -127,6 +111,7 @@ function teleport(teleportX, teleportZ, player) {
       y: player.location.y,
       z: parseFloat(teleportZ),
     };
+    
     const targetBlock = player.dimension.getBlock(targetBlockLocation);
     if (!targetBlock) {
       player.applyDamage(damage);
@@ -143,33 +128,33 @@ function teleport(teleportX, teleportZ, player) {
   }
 }
 
-function isPlayerInArea(playerX, playerZ, x1, x2, z1, z2) {
-  const minX = Math.min(x1, x2);
-  const maxX = Math.max(x1, x2);
+function isPlayerInArea(playerX, playerZ) {
+  const minX = Math.min(areaX1, areaX2);
+  const maxX = Math.max(areaX1, areaX2);
 
-  const minZ = Math.min(z1, z2);
-  const maxZ = Math.max(z1, z2);
+  const minZ = Math.min(areaZ1, areaZ2);
+  const maxZ = Math.max(areaZ1, areaZ2);
 
   return (
     playerX >= minX && playerX <= maxX && playerZ >= minZ && playerZ <= maxZ
   );
 }
 
-function distanceToNearestEdge(playerX, playerZ, x1, x2, z1, z2, safeX, safeZ) {
+function distanceToNearestEdge(playerX, playerZ, safeX, safeZ) {
   const distances = [
-    Math.abs(playerX - x1),
-    Math.abs(playerX - x2),
-    Math.abs(playerZ - z1),
-    Math.abs(playerZ - z2),
+    Math.abs(playerX - areaX1),
+    Math.abs(playerX - areaX2),
+    Math.abs(playerZ - areaZ1),
+    Math.abs(playerZ - areaZ2),
   ];
 
   let nearestDistance = Math.min(...distances);
 
   if (
-    playerX < Math.min(x1, x2) ||
-    playerX > Math.max(x1, x2) ||
-    playerZ < Math.min(z1, z2) ||
-    playerZ > Math.max(z1, z2)
+    playerX < Math.min(areaX1, areaX2) ||
+    playerX > Math.max(areaX1, areaX2) ||
+    playerZ < Math.min(areaZ1, areaZ2) ||
+    playerZ > Math.max(areaZ1, areaZ2)
   ) {
     const distanceToSafe = Math.sqrt(
       Math.pow(playerX - safeX, 2) + Math.pow(playerZ - safeZ, 2)
@@ -180,12 +165,12 @@ function distanceToNearestEdge(playerX, playerZ, x1, x2, z1, z2, safeX, safeZ) {
   return Math.ceil(nearestDistance);
 }
 
-function nearestEdgeCoordinates(playerX, playerZ, x1, x2, z1, z2) {
+function nearestEdgeCoordinates(playerX, playerZ) {
   const distances = [
-    { distance: Math.abs(playerX - x1), x: x1, z: playerZ },
-    { distance: Math.abs(playerX - x2), x: x2, z: playerZ },
-    { distance: Math.abs(playerZ - z1), x: playerX, z: z1 },
-    { distance: Math.abs(playerZ - z2), x: playerX, z: z2 },
+    { distance: Math.abs(playerX - areaX1), x: areaX1, z: playerZ },
+    { distance: Math.abs(playerX - areaX2), x: areaX2, z: playerZ },
+    { distance: Math.abs(playerZ - areaZ1), x: playerX, z: areaZ1 },
+    { distance: Math.abs(playerZ - areaZ2), x: playerX, z: areaZ2 },
   ];
 
   distances.sort((a, b) => a.distance - b.distance);
