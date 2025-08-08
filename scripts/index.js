@@ -98,6 +98,7 @@ world.beforeEvents.chatSend.subscribe((data) => {
       return;
     }
 
+    console.log(name + " » " + message);
     console.log(
       "PlayerChat:" +
         name +
