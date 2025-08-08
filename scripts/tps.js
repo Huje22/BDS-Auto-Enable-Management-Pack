@@ -33,9 +33,8 @@ export function getTps() {
 
   if (tps < 17) {
     world.sendMessage(tpsMess);
-  }
-
   console.log(consoleprefix + `TPS: ` + parseInt(tps));
+}
 }
 
 system.runInterval(() => {
