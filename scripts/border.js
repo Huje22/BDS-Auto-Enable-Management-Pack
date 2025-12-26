@@ -118,7 +118,7 @@ function teleport(teleportX, teleportZ, player) {
       return;
     }
 
-    if (targetBlock.isAir) {
+     if (targetBlock.isAir || targetBlock.isLiquid) {
       player.teleport(targetBlockLocation);
     } else {
       player.applyDamage(damage);
