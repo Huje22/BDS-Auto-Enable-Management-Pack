@@ -28,8 +28,6 @@ system.afterEvents.scriptEventReceive.subscribe((event) => {
     name: playerName,
   });
 
-  console.log(player.name);
-
   switch (event.id) {
     case "bds:tag_prefix":
       if (player !== undefined && restOfMessage !== "") {

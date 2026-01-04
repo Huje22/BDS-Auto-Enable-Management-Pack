@@ -14,3 +14,10 @@ export function sendToAdmins(message) {
         player.sendMessage(message);
       }
 }
+
+export function sendActionBarToAdmins(message) {
+    for (const player of world.getAllPlayers())
+      if (player.hasTag("adminPlus") || (player.playerPermissionLevel == 2)) {
+        player.onScreenDisplay.setActionBar(message);
+      }
+}
